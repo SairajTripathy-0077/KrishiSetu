@@ -20,9 +20,9 @@ let db: Db | null = null;
 
 export async function getDb(): Promise<Db> {
   if (db) return db;
-  const client = new MongoClient(process.env.MONGO_URI!);
+  const client = new MongoClient(process.env.MONGODB_URI!);
   await client.connect();
-  db = client.db(process.env.MONGO_DB_NAME);
+  db = client.db(process.env.MONGO_DB_NAME || "krishisetu");
   return db;
 }
 
@@ -708,8 +708,6 @@ export const storage = new MongoStorage();
   try {
     console.log("[MongoDB] Testing connection...");
     await getDb();
-    console.log("[MongoDB]", process.env.MONGO_URI);
-    console.log("MONGO_DB_NAME:", process.env.MONGO_DB_NAME);
     console.log("[MongoDB] Connection test successful");
   } catch (error) {
     console.error("[MongoDB] Connection test failed:", error);
