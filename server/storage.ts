@@ -27,6 +27,36 @@ export async function getDb(): Promise<Db> {
 }
 
 export class MongoStorage {
+
+    /**
+     * Get the latest active (pending/accepted) ownership transfer for a product.
+     * Only returns transfers with status 'pending' or 'accepted'.
+     */
+    public async getLatestActiveOwnershipTransfer(productId: string): Promise<OwnershipTransfer | null> {
+      const db = await getDb();
+      // Find the most recent transfer for this product with status 'pending' or 'accepted'
+      return db.collection<OwnershipTransfer>("ownershiptransfers")
+        .find({ productId, status: { $in: ["pending", "accepted"] } })
+        .sort({ timestamp: -1 })
+        .limit(1)
+        .next();
+    }
+
+    /**
+     * Update delivery status fields for an ownership transfer (non-breaking, adds fields if not present).
+     * @param id Transfer ID
+     * @param deliveryFields Fields to update (e.g., deliveryStatus, outForDeliveryAt)
+     */
+    public async updateOwnershipTransferDeliveryStatus(id: string, deliveryFields: Partial<{ deliveryStatus: string; outForDeliveryAt: Date }>): Promise<OwnershipTransfer | null> {
+      const db = await getDb();
+      const result = await db.collection<OwnershipTransfer>("ownershiptransfers").findOneAndUpdate(
+        { id },
+        { $set: deliveryFields },
+        { returnDocument: "after" }
+      );
+      if (!result) return null;
+      return result as OwnershipTransfer;
+    }
   // -------- Helper Methods --------
   private generateOwnershipHash(productId: string, ownerId: string, blockNumber: number, previousHash: string | null): string {
     const data = `${productId}-${ownerId}-${blockNumber}-${previousHash || 'genesis'}`;
