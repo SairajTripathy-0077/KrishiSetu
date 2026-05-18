@@ -12,6 +12,7 @@ import {
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import fs from "fs";
+import { translateText, improveGrammar, analyzeProductQuality } from "./ai";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -1304,6 +1305,46 @@ app.post("/api/debug/form-data", upload.single("paymentProof"), async (req: Requ
     } catch (error) {
       console.error("Error fetching product events:", error);
       return res.status(500).json({ message: "Failed to fetch product events" });
+    }
+  });
+
+  // --- AI Routes ---
+  app.post("/api/ai/translate", async (req: Request, res: Response) => {
+    try {
+      const { text, targetLanguage } = req.body;
+      if (!text || !targetLanguage) {
+        return res.status(400).json({ message: "Text and targetLanguage are required" });
+      }
+      const translatedText = await translateText(text, targetLanguage);
+      return res.json({ translatedText });
+    } catch (error) {
+      return res.status(500).json({ message: "Translation failed" });
+    }
+  });
+
+  app.post("/api/ai/grammar", async (req: Request, res: Response) => {
+    try {
+      const { text } = req.body;
+      if (!text) {
+        return res.status(400).json({ message: "Text is required" });
+      }
+      const improvedText = await improveGrammar(text);
+      return res.json({ improvedText });
+    } catch (error) {
+      return res.status(500).json({ message: "Grammar improvement failed" });
+    }
+  });
+
+  app.post("/api/ai/analyze-quality", async (req: Request, res: Response) => {
+    try {
+      const { image } = req.body;
+      if (!image) {
+        return res.status(400).json({ message: "Image data is required" });
+      }
+      const analysis = await analyzeProductQuality(image);
+      return res.json(analysis);
+    } catch (error) {
+      return res.status(500).json({ message: "Quality analysis failed" });
     }
   });
 

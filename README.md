@@ -183,7 +183,6 @@ cd KrishiSetu
 
 ```bash
 npm install
-cd client && npm install && cd ..
 ```
 
 ### Configure Environment Variables
@@ -203,9 +202,8 @@ VITE_FIREBASE_APP_ID=your_app_id_here
 
 # MongoDB Connection
 MONGODB_URI=your_mongodb_connection_string_here
-
-# API Keys
 GOOGLE_GEMINI_API_KEY=your_gemini_api_key_here
+
 ```
 
 > ⚠️ **IMPORTANT**: Never commit your `.env` file. It contains sensitive credentials!
