@@ -20,6 +20,7 @@ export default function Dashboard() {
   const [showRoleSelection, setShowRoleSelection] = useState(false);
   const formRef = useRef<HTMLDivElement>(null); // Ref to scroll to form
   const [, navigate] = useLocation();
+  const [lastUpdated, setLastUpdated] = useState("");
 
   // Show role selection if role not chosen
   useEffect(() => {
@@ -34,6 +35,24 @@ export default function Dashboard() {
       formRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [activeForm]);
+  useEffect(() => {
+  const updateTimestamp = () => {
+    const now = new Date();
+
+    setLastUpdated(
+      now.toLocaleString("en-IN", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      })
+    );
+  };
+
+  updateTimestamp();
+
+  const interval = setInterval(updateTimestamp, 60000);
+
+  return () => clearInterval(interval);
+}, []);
 
   // Handle register product button click
   const handleRegisterProduct = () => {
@@ -91,6 +110,9 @@ export default function Dashboard() {
                 <h2 className="text-3xl font-bold text-foreground">
                   Supply Chain Dashboard
                 </h2>
+                <p className="text-sm text-muted-foreground italic mt-1">
+                  Last updated: {lastUpdated}
+                </p>
                 <p className="text-muted-foreground mt-1">
                   Track, verify, and manage your product journey
                 </p>
