@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { Bell, Sprout, ChevronDown, LogOut, User, Menu } from "lucide-react";
+import { Bell, Sprout, ChevronDown, LogOut, User, Menu, Moon, Sun } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 
@@ -187,7 +187,17 @@ export function NavigationHeader() {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 flex-shrink-0">
+            <div className="flex items-center gap-3 flex-shrink-0 self-center">
+              <div className="flex items-center">
+          <button
+          onClick={() =>
+              setTheme(theme === "dark" ? "light" : "dark")
+            }
+            className="bg-green-600 text-white w-10 h-10 rounded-full flex items-center justify-center"
+      >
+          {theme === "dark" ? "☀" : "🌙"}
+        </button>
+      </div>
               <Button
                 onClick={() => setLocation("/login")}
                 data-testid="button-login"
@@ -439,7 +449,7 @@ export function NavigationHeader() {
                       className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                         isActiveRoute(link.href)
                           ? "text-primary border-b-2 border-primary bg-muted"
-                          : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
                       } truncate`}
                       data-testid={link.testid}
                     >
@@ -451,6 +461,18 @@ export function NavigationHeader() {
 
             {/* Right: Notifications, user menu, mobile toggle */}
             <div className="flex items-center gap-3 flex-shrink-0">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                    data-testid="button-theme-toggle"
+                    >
+                    {theme === "dark" ? (
+    <                Sun className="h-5 w-5" />
+                      ) : (
+                    <Moon className="h-5 w-5" />
+                      )}
+                    </Button>
               <DropdownMenu
                 open={notifDropdownOpen}
                 onOpenChange={setNotifDropdownOpen}
@@ -528,7 +550,7 @@ export function NavigationHeader() {
                                   </Button>
                                   <Button
                                     size="sm"
-                                    variant="outline"
+                                    variant="ghost"
                                     onClick={() => handleRejectOwnership(notif)}
                                     data-testid={`button-reject-${notif.id}`}
                                   >
@@ -648,7 +670,7 @@ export function NavigationHeader() {
                     className={`block px-3 py-2 rounded-md text-base font-medium ${
                       isActiveRoute(link.href)
                         ? "text-primary border-l-4 border-primary bg-muted"
-                        : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     }`}
                     data-testid={link.testid}
                   >
