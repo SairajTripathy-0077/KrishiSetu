@@ -1,16 +1,15 @@
-import { NavigationHeader } from "@/components/NavigationHeader";
-import { useAuth } from "@/hooks/useAuth";
-import { useProducts } from "@/hooks/useProducts";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { QRCodeGenerator } from "@/components/QRCodeGenerator";
-import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link } from "wouter";
+import { NavigationHeader } from "@/components/NavigationHeader";
+import { QRCodeGenerator } from "@/components/QRCodeGenerator";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import EmptyState from "@/components/ui/EmptyState";
-
+import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/useAuth";
+import { useProducts } from "@/hooks/useProducts";
 
 interface Owner {
   id: string;
@@ -98,25 +97,23 @@ export default function RegisteredProductsPage() {
     );
   }
 
-const filteredProducts =
-  products?.filter((product) => {
-    const query = debouncedSearch.toLowerCase();
+  const filteredProducts =
+    products?.filter((product) => {
+      const query = debouncedSearch.toLowerCase();
 
-    const matchesSearch =
-      product.name.toLowerCase().includes(query) ||
-      product.category.toLowerCase().includes(query) ||
-      product.farmName.toLowerCase().includes(query);
+      const matchesSearch =
+        product.name.toLowerCase().includes(query) ||
+        product.category.toLowerCase().includes(query) ||
+        product.farmName.toLowerCase().includes(query);
 
-    const matchesCategory =
-      !selectedCategory ||
-      product.category === selectedCategory;
+      const matchesCategory =
+        !selectedCategory || product.category === selectedCategory;
 
-    const matchesStatus =
-      !selectedStatus ||
-      product.status.toLowerCase() === selectedStatus;
+      const matchesStatus =
+        !selectedStatus || product.status.toLowerCase() === selectedStatus;
 
-    return matchesSearch && matchesCategory && matchesStatus;
-  }) || [];
+      return matchesSearch && matchesCategory && matchesStatus;
+    }) || [];
   return (
     <>
       <NavigationHeader />
@@ -144,11 +141,13 @@ const filteredProducts =
               className="border rounded-lg px-4 py-2 bg-background"
             >
               <option value="">All Categories</option>
-              {[...new Set(products?.map((p) => p.category))].map((category: string) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
+              {[...new Set(products?.map((p) => p.category))].map(
+                (category: string) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ),
+              )}
             </select>
 
             <select
@@ -206,8 +205,8 @@ const filteredProducts =
         )}
         {!isLoading && !isError && products?.length === 0 && !searchQuery && (
           <EmptyState
-          title="No products found"
-           description="Products you register will appear here."
+            title="No products found"
+            description="Products you register will appear here."
           />
         )}
         <div className="space-y-6">
@@ -326,8 +325,14 @@ const filteredProducts =
 
                     {/* Action Buttons */}
                     <div className="flex gap-2 mt-4">
-                      <Link href={`/product/${product.id}?from=registered-products`}>
-                        <Button size="sm" variant="outline" className="primary-btn">
+                      <Link
+                        href={`/product/${product.id}?from=registered-products`}
+                      >
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="primary-btn"
+                        >
                           View Details
                         </Button>
                       </Link>
@@ -336,7 +341,7 @@ const filteredProducts =
                           {editingProductId === product.id ? (
                             <>
                               <button
-                               className="primary-btn bg-green-600 text-white hover:bg-green-700"
+                                className="primary-btn bg-green-600 text-white hover:bg-green-700"
                                 onClick={() => handleEditSave(product.id)}
                               >
                                 Save

@@ -1,23 +1,21 @@
-import { useRef, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useCreateProduct } from "@/hooks/useProducts";
-import { useAuth } from "@/hooks/useAuth";
 import { insertProductSchema } from "@shared/schema";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Camera as CameraIcon,
+  Languages,
+  Loader2,
+  MapPin,
+  Plus,
+  PlusCircle,
+  Sparkles,
+  X,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -26,9 +24,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { LoadingStates } from "./LoadingStates";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { PlusCircle, X, Plus, MapPin, Loader2, Sparkles, Languages, Camera as CameraIcon } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useCreateProduct } from "@/hooks/useProducts";
+import { LoadingStates } from "./LoadingStates";
 
 // Create a stricter schema with required fields
 const formSchema = insertProductSchema.extend({
@@ -91,7 +100,10 @@ export function ProductRegistrationForm({
   const [isEnhancing, setIsEnhancing] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [qualityAnalysis, setQualityAnalysis] = useState<{ score: number; explanation: string } | null>(null);
+  const [qualityAnalysis, setQualityAnalysis] = useState<{
+    score: number;
+    explanation: string;
+  } | null>(null);
 
   const indianLanguages = [
     { name: "Hindi", code: "hi" },
@@ -107,7 +119,11 @@ export function ProductRegistrationForm({
   const handleEnhanceDescription = async () => {
     const description = form.getValues("description");
     if (!description) {
-      toast({ title: "Error", description: "Please enter a description first", variant: "destructive" });
+      toast({
+        title: "Error",
+        description: "Please enter a description first",
+        variant: "destructive",
+      });
       return;
     }
     setIsEnhancing(true);
@@ -120,7 +136,10 @@ export function ProductRegistrationForm({
       const data = await response.json();
       if (data.improvedText) {
         form.setValue("description", data.improvedText);
-        toast({ title: "Enhanced!", description: "Description improved using AI" });
+        toast({
+          title: "Enhanced!",
+          description: "Description improved using AI",
+        });
       }
     } catch (error) {
       console.error("Enhancement error:", error);
@@ -142,7 +161,10 @@ export function ProductRegistrationForm({
       const data = await response.json();
       if (data.translatedText) {
         form.setValue("description", data.translatedText);
-        toast({ title: "Translated!", description: `Description translated to ${language}` });
+        toast({
+          title: "Translated!",
+          description: `Description translated to ${language}`,
+        });
       }
     } catch (error) {
       console.error("Translation error:", error);
@@ -177,8 +199,8 @@ export function ProductRegistrationForm({
     try {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-          query
-        )}&addressdetails=1&limit=5`
+          query,
+        )}&addressdetails=1&limit=5`,
       );
       const data = await response.json();
       setLocationSuggestions(data);
@@ -194,7 +216,9 @@ export function ProductRegistrationForm({
     }
   };
 
-  const handleAnalyzeQuality = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAnalyzeQuality = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -215,7 +239,10 @@ export function ProductRegistrationForm({
           const data = await response.json();
           if (data.score) {
             setQualityAnalysis(data);
-            toast({ title: "Analysis Complete!", description: `Quality Score: ${data.score}/10` });
+            toast({
+              title: "Analysis Complete!",
+              description: `Quality Score: ${data.score}/10`,
+            });
           }
         } catch (error) {
           console.error("Analysis API error:", error);
@@ -244,7 +271,7 @@ export function ProductRegistrationForm({
       certifications: [],
       status: "registered",
       ownerId: user?.id || "",
-      price:"",
+      price: "",
     },
   });
 
@@ -444,19 +471,33 @@ export function ProductRegistrationForm({
                                 onClick={handleEnhanceDescription}
                                 disabled={isEnhancing}
                               >
-                                {isEnhancing ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
+                                {isEnhancing ? (
+                                  <Loader2 className="w-3 h-3 animate-spin" />
+                                ) : (
+                                  <Sparkles className="w-3 h-3" />
+                                )}
                                 AI Enhance
                               </Button>
-                              <Select onValueChange={handleTranslate} disabled={isTranslating}>
+                              <Select
+                                onValueChange={handleTranslate}
+                                disabled={isTranslating}
+                              >
                                 <SelectTrigger className="h-7 text-[10px] w-24">
                                   <div className="flex items-center gap-1">
-                                    {isTranslating ? <Loader2 className="w-3 h-3 animate-spin" /> : <Languages className="w-3 h-3" />}
+                                    {isTranslating ? (
+                                      <Loader2 className="w-3 h-3 animate-spin" />
+                                    ) : (
+                                      <Languages className="w-3 h-3" />
+                                    )}
                                     <span>Translate</span>
                                   </div>
                                 </SelectTrigger>
                                 <SelectContent>
                                   {indianLanguages.map((lang) => (
-                                    <SelectItem key={lang.code} value={lang.name}>
+                                    <SelectItem
+                                      key={lang.code}
+                                      value={lang.name}
+                                    >
                                       {lang.name}
                                     </SelectItem>
                                   ))}
@@ -668,7 +709,7 @@ export function ProductRegistrationForm({
                                   <FormControl>
                                     <Checkbox
                                       checked={field.value?.includes(
-                                        certification
+                                        certification,
                                       )}
                                       onCheckedChange={(checked) => {
                                         return checked
@@ -679,8 +720,8 @@ export function ProductRegistrationForm({
                                           : field.onChange(
                                               field.value?.filter(
                                                 (value) =>
-                                                  value !== certification
-                                              )
+                                                  value !== certification,
+                                              ),
                                             );
                                       }}
                                       data-testid={`checkbox-${certification
@@ -711,7 +752,8 @@ export function ProductRegistrationForm({
                         AI Quality Inspector (Beta)
                       </h4>
                       <p className="text-xs text-muted-foreground mt-1">
-                        Upload a photo of your produce for instant AI quality grading
+                        Upload a photo of your produce for instant AI quality
+                        grading
                       </p>
                     </div>
                     <div className="relative">
@@ -728,7 +770,11 @@ export function ProductRegistrationForm({
                         className="gap-2"
                         disabled={isAnalyzing}
                       >
-                        {isAnalyzing ? <Loader2 className="w-4 h-4 animate-spin" /> : <CameraIcon className="w-4 h-4" />}
+                        {isAnalyzing ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <CameraIcon className="w-4 h-4" />
+                        )}
                         {isAnalyzing ? "Analyzing..." : "Take Photo"}
                       </Button>
                     </div>
@@ -737,8 +783,12 @@ export function ProductRegistrationForm({
                   {qualityAnalysis && (
                     <div className="mt-3 p-3 bg-background rounded border border-primary/10 animate-in fade-in slide-in-from-top-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-sm font-semibold">Quality Score:</span>
-                        <span className="text-lg font-bold text-primary">{qualityAnalysis.score}/10</span>
+                        <span className="text-sm font-semibold">
+                          Quality Score:
+                        </span>
+                        <span className="text-lg font-bold text-primary">
+                          {qualityAnalysis.score}/10
+                        </span>
                       </div>
                       <p className="text-xs text-muted-foreground leading-relaxed">
                         {qualityAnalysis.explanation}

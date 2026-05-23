@@ -1,26 +1,33 @@
+import {
+  Bell,
+  ChevronDown,
+  LogOut,
+  Menu,
+  Moon,
+  Sprout,
+  Sun,
+  User,
+} from "lucide-react";
+import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
   DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Bell, Sprout, ChevronDown, LogOut, User, Menu, Moon, Sun } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
-
-
+import { useAuth } from "@/hooks/useAuth";
 // IMPORT your form components (update paths if needed)
 import { DistributorProductForm } from "./DistributorProductForm";
-import { RetailerProductForm } from "./RetailerProductForm";
 import { OwnershipManagementPanel } from "./OwnershipManagementPanel"; // Import at the top
-import { useTheme } from "next-themes"
+import { RetailerProductForm } from "./RetailerProductForm";
 export function NavigationHeader() {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
   const [location, setLocation] = useLocation();
   const { user, firebaseUser, logout, loading } = useAuth();
   const { toast } = useToast();
@@ -129,14 +136,10 @@ export function NavigationHeader() {
 
   if (loading) {
     return (
-
       <nav className="bg-card border-b border-border sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
           <div className="flex justify-center h-16 items-center">
-          <div className="flex items-center gap-4">
-
-          </div>
+            <div className="flex items-center gap-4"></div>
             <div className="animate-pulse">KrishiSetu...</div>
           </div>
         </div>
@@ -189,15 +192,13 @@ export function NavigationHeader() {
 
             <div className="flex items-center gap-3 flex-shrink-0 self-center">
               <div className="flex items-center">
-          <button
-          onClick={() =>
-              setTheme(theme === "dark" ? "light" : "dark")
-            }
-            className="bg-green-600 text-white w-10 h-10 rounded-full flex items-center justify-center"
-      >
-          {theme === "dark" ? "☀" : "🌙"}
-        </button>
-      </div>
+                <button
+                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                  className="bg-green-600 text-white w-10 h-10 rounded-full flex items-center justify-center"
+                >
+                  {theme === "dark" ? "☀" : "🌙"}
+                </button>
+              </div>
               <Button
                 onClick={() => setLocation("/login")}
                 data-testid="button-login"
@@ -351,7 +352,7 @@ export function NavigationHeader() {
   };
   const markNotificationReadLocal = (notifId: string) => {
     setNotifications((prev) =>
-      prev.map((n) => n.id === notifId ? { ...n, read: true } : n)
+      prev.map((n) => (n.id === notifId ? { ...n, read: true } : n)),
     );
     setNotificationCount((prev) => Math.max(0, prev - 1));
   };
@@ -416,7 +417,6 @@ export function NavigationHeader() {
 
   return (
     <>
-   
       <nav className="bg-card border-b border-border sticky top-0 z-50 shadow-sm w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-between items-center h-16 gap-2">
@@ -456,18 +456,18 @@ export function NavigationHeader() {
 
             {/* Right: Notifications, user menu, mobile toggle */}
             <div className="flex items-center gap-3 flex-shrink-0">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                    data-testid="button-theme-toggle"
-                    >
-                    {theme === "dark" ? (
-    <                Sun className="h-5 w-5" />
-                      ) : (
-                    <Moon className="h-5 w-5" />
-                      )}
-                    </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                data-testid="button-theme-toggle"
+              >
+                {theme === "dark" ? (
+                  <Sun className="h-5 w-5" />
+                ) : (
+                  <Moon className="h-5 w-5" />
+                )}
+              </Button>
               <DropdownMenu
                 open={notifDropdownOpen}
                 onOpenChange={setNotifDropdownOpen}
@@ -564,7 +564,9 @@ export function NavigationHeader() {
                       return (
                         <DropdownMenuItem
                           key={notif.id}
-                          onClick={() => !isRead && handleNotificationClick(notif)}
+                          onClick={() =>
+                            !isRead && handleNotificationClick(notif)
+                          }
                           style={{ cursor: isRead ? "default" : "pointer" }}
                           className={notifClass}
                         >
@@ -727,4 +729,3 @@ export function NavigationHeader() {
     </>
   );
 }
-

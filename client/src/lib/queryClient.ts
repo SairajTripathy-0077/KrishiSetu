@@ -12,7 +12,7 @@ export async function apiRequest(
   method: string,
   url: string,
   data?: any,
-  headers: Record<string, string> = {}
+  headers: Record<string, string> = {},
 ) {
   const allHeaders = await getAuthHeaders({
     "Content-Type": "application/json",

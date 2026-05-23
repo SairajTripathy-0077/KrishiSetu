@@ -41,9 +41,9 @@ const fetchCerts = async () => {
 };
 
 const getTokenKid = (token: string) => {
-  const decoded = jwt.decode(token, { complete: true }) as
-    | { header?: { kid?: string } }
-    | null;
+  const decoded = jwt.decode(token, { complete: true }) as {
+    header?: { kid?: string };
+  } | null;
   return decoded?.header?.kid ?? null;
 };
 

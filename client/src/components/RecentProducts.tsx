@@ -1,13 +1,13 @@
-import { useUserProducts } from "@/hooks/useProducts";
-import { useAuth } from "@/hooks/useAuth";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Link } from "wouter";
-import { Eye, ShieldCheck, Clock } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { Clock, Eye, ShieldCheck } from "lucide-react";
+import { Link } from "wouter";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import EmptyState from "@/components/ui/EmptyState";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useAuth } from "@/hooks/useAuth";
+import { useUserProducts } from "@/hooks/useProducts";
 import CopyableText from "./ui/CopyableText";
 
 export function RecentProducts() {
@@ -91,21 +91,18 @@ export function RecentProducts() {
       <CardContent className="p-0">
         {recentProducts.length === 0 ? (
           <div className="p-8 text-center">
-           <div className="flex flex-col items-center gap-4">
-            <EmptyState
-            title="No products found"
-            description="Recently registered products will appear here."
+            <div className="flex flex-col items-center gap-4">
+              <EmptyState
+                title="No products found"
+                description="Recently registered products will appear here."
               />
 
-          <Link href="/product-registration">
-          <Button
-           variant="default"
-            data-testid="link-register-first"
-            >
-            Register your first product
-          </Button>
-        </Link>
-    </div>
+              <Link href="/product-registration">
+                <Button variant="default" data-testid="link-register-first">
+                  Register your first product
+                </Button>
+              </Link>
+            </div>
           </div>
         ) : (
           <div className="divide-y divide-border">
@@ -129,13 +126,13 @@ export function RecentProducts() {
                         {product.name}
                       </h4>
                       <div
-                      className="text-sm text-muted-foreground"
-                      data-testid={`text-product-batch-${product.id}`}
-                        >
-                      <CopyableText text={`Batch #${product.batchId}`} />
+                        className="text-sm text-muted-foreground"
+                        data-testid={`text-product-batch-${product.id}`}
+                      >
+                        <CopyableText text={`Batch #${product.batchId}`} />
                       </div>
                       <div className="mt-1">
-                      <CopyableText text={product.id} />
+                        <CopyableText text={product.id} />
                       </div>
                       <div className="flex items-center gap-4 mt-1">
                         <Badge

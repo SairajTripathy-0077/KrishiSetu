@@ -1,13 +1,13 @@
-import { NavigationHeader } from "@/components/NavigationHeader";
-import { useAuth } from "@/hooks/useAuth";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Product } from "@shared/schema";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { ProductSearch } from "@/components/ProductSearch";
-import { Product } from "@shared/schema";
 import { Link } from "wouter";
+import { NavigationHeader } from "@/components/NavigationHeader";
+import { ProductSearch } from "@/components/ProductSearch";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { useAuth } from "@/hooks/useAuth";
 import { getAuthHeaders } from "@/lib/authHeaders";
 
 interface Owner {
@@ -51,7 +51,7 @@ export default function RequestProductsPage() {
           data.map((p: any) => ({
             ...p,
             harvestDate: p.harvestDate ? new Date(p.harvestDate) : undefined,
-          }))
+          })),
         );
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -92,7 +92,7 @@ export default function RequestProductsPage() {
         } catch (error) {
           console.error(
             `Error fetching data for product ${product.id}:`,
-            error
+            error,
           );
           map[product.id] = [];
         }
@@ -130,7 +130,7 @@ export default function RequestProductsPage() {
       if (!res.ok) throw new Error("Failed to request ownership");
 
       toast.success(
-        "Ownership request sent! The current owner will be notified."
+        "Ownership request sent! The current owner will be notified.",
       );
     } catch (error) {
       console.error("Error requesting ownership:", error);
@@ -220,7 +220,7 @@ export default function RequestProductsPage() {
                         harvestDate: p.harvestDate
                           ? new Date(p.harvestDate)
                           : undefined,
-                      }))
+                      })),
                     );
                     setIsError(false);
                   } catch (error) {
@@ -332,7 +332,11 @@ export default function RequestProductsPage() {
                       <Link
                         href={`/product/${product.id}?from=request-products`}
                       >
-                        <Button size="sm" variant="outline" className="primary-btn">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="primary-btn"
+                        >
                           View Details
                         </Button>
                       </Link>

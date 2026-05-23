@@ -1,15 +1,19 @@
 // components/OwnershipManagementPanel.tsx
-import { useState, useEffect } from "react";
-import { useAuth } from "@/hooks/useAuth";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle, Shield, Users } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import {
   Form,
@@ -20,13 +24,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Shield, Users, AlertCircle } from "lucide-react";
-import { UserSearch } from "./UserSearch";
-import { ProductSearch } from "./ProductSearch";
+import { useAuth } from "@/hooks/useAuth";
 import { getAuthHeaders } from "@/lib/authHeaders";
+import { ProductSearch } from "./ProductSearch";
+import { UserSearch } from "./UserSearch";
 
 const transferFormSchema = z.object({
   productId: z.string().min(1, "Product is required"),

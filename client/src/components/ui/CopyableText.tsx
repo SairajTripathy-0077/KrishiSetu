@@ -1,5 +1,5 @@
+import { Check, Copy } from "lucide-react";
 import { useState } from "react";
-import { Copy, Check } from "lucide-react";
 
 interface Props {
   text: string;
@@ -38,11 +38,7 @@ const CopyableText = ({ text }: Props) => {
         )}
       </button>
 
-      {copied && (
-        <span className="text-xs text-green-500">
-          Copied!
-        </span>
-      )}
+      {copied && <span className="text-xs text-green-500">Copied!</span>}
     </div>
   );
 };

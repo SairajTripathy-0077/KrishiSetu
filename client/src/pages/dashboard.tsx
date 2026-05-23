@@ -1,24 +1,26 @@
+import { Bell, LogOut, Plus, QrCode, User } from "lucide-react";
+import { useTheme } from "next-themes";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "wouter";
 import { NavigationHeader } from "@/components/NavigationHeader";
-import { StatsOverview } from "@/components/StatsOverview";
-import { RecentProducts } from "@/components/RecentProducts";
-import { QuickActionsPanel } from "@/components/QuickActionsPanel";
-import { SupplyChainMap } from "@/components/SupplyChainMap";
 import { ProductRegistrationForm } from "@/components/ProductRegistrationForm";
+import { QuickActionsPanel } from "@/components/QuickActionsPanel";
+import { RecentProducts } from "@/components/RecentProducts";
+import { RoleDashboard } from "@/components/RoleDashboard";
+import { RoleSelection } from "@/components/RoleSelection";
+import { StatsOverview } from "@/components/StatsOverview";
+import { SupplyChainMap } from "@/components/SupplyChainMap";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 import { DistributorProductForm } from "../components/DistributorProductForm";
 import { RetailerProductForm } from "../components/RetailerProductForm";
-import { RoleSelection } from "@/components/RoleSelection";
-import { RoleDashboard } from "@/components/RoleDashboard";
-import { Button } from "@/components/ui/button";
-import { QrCode, Plus, Bell, User, LogOut } from "lucide-react";
-import { Link, useLocation } from "wouter";
-import { useAuth } from "@/hooks/useAuth";
-import React, { useState, useEffect, useRef } from "react";
-import { useTheme } from "next-themes";
 
 export default function Dashboard() {
   const { theme, setTheme } = useTheme();
   const { user, loading, refreshUser } = useAuth();
-  const [activeForm, setActiveForm] = useState<"farmer" | "distributor" | "retailer" | null>(null);
+  const [activeForm, setActiveForm] = useState<
+    "farmer" | "distributor" | "retailer" | null
+  >(null);
   const [showRoleSelection, setShowRoleSelection] = useState(false);
   const formRef = useRef<HTMLDivElement>(null); // Ref to scroll to form
   const [, navigate] = useLocation();
@@ -38,31 +40,30 @@ export default function Dashboard() {
     }
   }, [activeForm]);
   useEffect(() => {
-  const updateTimestamp = () => {
-    const now = new Date();
+    const updateTimestamp = () => {
+      const now = new Date();
 
-    setLastUpdated(
-      now.toLocaleString("en-IN", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      })
-    );
-  };
+      setLastUpdated(
+        now.toLocaleString("en-IN", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        }),
+      );
+    };
 
-  updateTimestamp();
+    updateTimestamp();
 
-  const interval = setInterval(updateTimestamp, 60000);
+    const interval = setInterval(updateTimestamp, 60000);
 
-  return () => clearInterval(interval);
-}, []);
+    return () => clearInterval(interval);
+  }, []);
 
   // Handle register product button click
   const handleRegisterProduct = () => {
     if (!user) return;
     if (user.role === "farmer") {
       setActiveForm("farmer");
-    }
-    else if (user.role === "distributor") {
+    } else if (user.role === "distributor") {
       setActiveForm("distributor");
     } else if (user.role === "retailer") {
       setActiveForm("retailer");
@@ -79,7 +80,7 @@ export default function Dashboard() {
     return (
       <div className="min-h-screen bg-background font-sans">
         <NavigationHeader />
-        
+
         <main className="pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center text-muted-foreground">
             Loading dashboard...
@@ -92,9 +93,8 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-background font-sans">
       <NavigationHeader />
-      
+
       <main className="pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-         
         {/* Dashboard header based on role */}
         {user?.roleSelected && (
           <div className="mb-8">
@@ -209,10 +209,7 @@ export default function Dashboard() {
               onClick={handleCloseForm}
             />
             <div className="relative mt-12 mb-12 mx-4 max-h-[90vh] w-full max-w-4xl overflow-auto rounded-lg bg-white p-6 shadow-2xl z-[121]">
-              <RetailerProductForm
-                isVisible={true}
-                onClose={handleCloseForm}
-              />
+              <RetailerProductForm isVisible={true} onClose={handleCloseForm} />
             </div>
           </div>
         )}
