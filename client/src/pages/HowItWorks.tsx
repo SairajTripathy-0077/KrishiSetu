@@ -21,13 +21,11 @@ const HowItWorks: React.FC = () => {
     Farmer: [
       {
         title: "Register",
-        description:
-          "Create your farm profile to access tools and tracking services.",
+        description: "Create your farm profile to access tools and tracking services.",
       },
       {
         title: "List Produce",
-        description:
-          "Add details of your produce including quantity, quality, and location.",
+        description: "Add details of your produce including quantity, quality, and location.",
       },
 
       {
@@ -37,13 +35,11 @@ const HowItWorks: React.FC = () => {
       },
       {
         title: "Manage Inventory",
-        description:
-          "Keep your produce stock updated and manage availability efficiently.",
+        description: "Keep your produce stock updated and manage availability efficiently.",
       },
       {
         title: "Get Insights",
-        description:
-          "Receive analytics and reports to optimize farm output and reduce losses.",
+        description: "Receive analytics and reports to optimize farm output and reduce losses.",
       },
       {
         title: "Connect with Buyers",
@@ -54,25 +50,21 @@ const HowItWorks: React.FC = () => {
     Retailer: [
       {
         title: "Browse Produce",
-        description:
-          "Search for available farm produce from verified farmers nearby.",
+        description: "Search for available farm produce from verified farmers nearby.",
       },
       {
         title: "Place Orders",
-        description:
-          "Order directly through the platform for efficient logistics.",
+        description: "Order directly through the platform for efficient logistics.",
       },
       {
         title: "Track Supply",
-        description:
-          "Monitor delivery schedules to ensure timely stock management.",
+        description: "Monitor delivery schedules to ensure timely stock management.",
       },
     ],
     Distributor: [
       {
         title: "Connect",
-        description:
-          "Find supply chains that need transport and storage services.",
+        description: "Find supply chains that need transport and storage services.",
       },
       {
         title: "Manage Deliveries",
@@ -80,25 +72,21 @@ const HowItWorks: React.FC = () => {
       },
       {
         title: "Track Performance",
-        description:
-          "Analyze delivery data and improve services for farmers and retailers.",
+        description: "Analyze delivery data and improve services for farmers and retailers.",
       },
     ],
     Consumer: [
       {
         title: "Discover",
-        description:
-          "Find fresh farm produce available near you at the best prices.",
+        description: "Find fresh farm produce available near you at the best prices.",
       },
       {
         title: "Order",
-        description:
-          "Place orders easily and choose delivery preferences as per convenience.",
+        description: "Place orders easily and choose delivery preferences as per convenience.",
       },
       {
         title: "Track",
-        description:
-          "Stay updated on the delivery process and expected arrival time.",
+        description: "Stay updated on the delivery process and expected arrival time.",
       },
       {
         title: "Trace Origin",
@@ -145,10 +133,7 @@ const HowItWorks: React.FC = () => {
               </div>
             ))}
           </div>
-          <button
-            onClick={() => setSelectedRole(null)}
-            className="back-button primary-btn"
-          >
+          <button onClick={() => setSelectedRole(null)} className="back-button primary-btn">
             ← Select Another Role
           </button>
         </div>

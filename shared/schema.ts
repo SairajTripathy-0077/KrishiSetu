@@ -21,11 +21,9 @@ export const userSchema = z.object({
 });
 export type User = z.infer<typeof userSchema>;
 
-export const insertUserSchema = userSchema
-  .omit({ id: true, createdAt: true })
-  .extend({
-    createdAt: z.date().optional(),
-  });
+export const insertUserSchema = userSchema.omit({ id: true, createdAt: true }).extend({
+  createdAt: z.date().optional(),
+});
 export type InsertUser = z.infer<typeof insertUserSchema>;
 
 // -------------------- Product --------------------
@@ -55,26 +53,18 @@ export const productSchema = z.object({
 });
 export type Product = z.infer<typeof productSchema>;
 
-export const insertProductSchema = productSchema
-  .omit({ id: true, createdAt: true })
-  .extend({
-    createdAt: z.date().optional(),
-    name: z.string().trim().min(1, "Product name is required"),
-    farmName: z.string().trim().min(1, "Farm name is required"),
-    quantity: z
-      .string()
-      .trim()
-      .min(1, "Quantity is required")
-      .refine(
-        (value) => Number(value) > 0,
-        "Quantity must be a positive number",
-      ),
-    harvestDate: z.preprocess(
-      (val) => (typeof val === "string" ? new Date(val) : val),
-      z.date(),
-    ),
-    price: z.string().nullable().optional(), // Add to insert schema too
-  });
+export const insertProductSchema = productSchema.omit({ id: true, createdAt: true }).extend({
+  createdAt: z.date().optional(),
+  name: z.string().trim().min(1, "Product name is required"),
+  farmName: z.string().trim().min(1, "Farm name is required"),
+  quantity: z
+    .string()
+    .trim()
+    .min(1, "Quantity is required")
+    .refine((value) => Number(value) > 0, "Quantity must be a positive number"),
+  harvestDate: z.preprocess((val) => (typeof val === "string" ? new Date(val) : val), z.date()),
+  price: z.string().nullable().optional(), // Add to insert schema too
+});
 export type InsertProduct = z.infer<typeof insertProductSchema>;
 
 // -------------------- Transaction --------------------
@@ -146,11 +136,9 @@ export const scanSchema = z.object({
 });
 export type Scan = z.infer<typeof scanSchema>;
 
-export const insertScanSchema = scanSchema
-  .omit({ id: true, timestamp: true })
-  .extend({
-    timestamp: z.date().optional(),
-  });
+export const insertScanSchema = scanSchema.omit({ id: true, timestamp: true }).extend({
+  timestamp: z.date().optional(),
+});
 export type InsertScan = z.infer<typeof insertScanSchema>;
 
 // -------------------- OwnershipTransfer --------------------
@@ -177,9 +165,7 @@ export const insertOwnershipTransferSchema = ownershipTransferSchema
     actualDelivery: z.date().nullable().optional(),
     timestamp: z.date().optional(),
   });
-export type InsertOwnershipTransfer = z.infer<
-  typeof insertOwnershipTransferSchema
->;
+export type InsertOwnershipTransfer = z.infer<typeof insertOwnershipTransferSchema>;
 
 // -------------------- Notification --------------------
 export const notificationSchema = z.object({

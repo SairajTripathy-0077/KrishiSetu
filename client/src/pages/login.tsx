@@ -199,9 +199,7 @@ export default function LoginPage() {
         </CardContent>
       </Card>
 
-      {error && (
-        <div className="text-destructive mt-4 text-center">{error}</div>
-      )}
+      {error && <div className="text-destructive mt-4 text-center">{error}</div>}
     </div>
   );
 }

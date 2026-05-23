@@ -1,7 +1,8 @@
 // Update your ProductHistory component
 
 import { Calendar, DollarSign, Eye, MapPin, Package, User } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PaymentProofModal } from "./PaymentProofModal";
 import CopyableText from "./ui/CopyableText";
@@ -59,9 +60,7 @@ const FIELD_ICONS: Record<string, React.ReactNode> = {
 export function ProductHistory({ productId }: ProductHistoryProps) {
   const [events, setEvents] = useState<RegistrationEvent[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedPaymentProof, setSelectedPaymentProof] = useState<
-    string | null
-  >(null);
+  const [selectedPaymentProof, setSelectedPaymentProof] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchRegistrationEvents() {
@@ -71,8 +70,7 @@ export function ProductHistory({ productId }: ProductHistoryProps) {
           const data = await res.json();
           // Filter for registration events only
           const registrationEvents = data.filter(
-            (event: RegistrationEvent) =>
-              event.eventType === "ownership_registration",
+            (event: RegistrationEvent) => event.eventType === "ownership_registration",
           );
           setEvents(registrationEvents);
         }
@@ -135,9 +133,7 @@ export function ProductHistory({ productId }: ProductHistoryProps) {
     return (
       <Card className="shadow-sm border border-border">
         <CardHeader>
-          <CardTitle className="text-xl font-semibold">
-            Product Registration History
-          </CardTitle>
+          <CardTitle className="text-xl font-semibold">Product Registration History</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-muted-foreground">Loading history...</div>
@@ -166,14 +162,10 @@ export function ProductHistory({ productId }: ProductHistoryProps) {
           ) : (
             <ol className="space-y-6">
               {events.map((event) => {
-                const userName =
-                  event.extra?.userName || event.userName || "Unknown User";
-                const userRole =
-                  event.extra?.userRole || event.userRole || "Unknown Role";
-                const previousOwnerName =
-                  event.extra?.previousOwnerName || "Unknown";
-                const previousOwnerRole =
-                  event.extra?.previousOwnerRole || "Unknown";
+                const userName = event.extra?.userName || event.userName || "Unknown User";
+                const userRole = event.extra?.userRole || event.userRole || "Unknown Role";
+                const previousOwnerName = event.extra?.previousOwnerName || "Unknown";
+                const previousOwnerRole = event.extra?.previousOwnerRole || "Unknown";
 
                 return (
                   <li key={event.id} className="flex items-start gap-3">
@@ -186,18 +178,15 @@ export function ProductHistory({ productId }: ProductHistoryProps) {
                     <div className="flex-1">
                       <div className="text-xs text-muted-foreground flex flex-col gap-1 mb-2">
                         <div>
-                          <span className="font-semibold">From:</span>{" "}
-                          {previousOwnerName} ({previousOwnerRole})
+                          <span className="font-semibold">From:</span> {previousOwnerName} (
+                          {previousOwnerRole})
                         </div>
                         <div>
-                          <span className="font-semibold">To:</span> {userName}{" "}
-                          ({userRole})
+                          <span className="font-semibold">To:</span> {userName} ({userRole})
                         </div>
                         <div className="flex items-center gap-2">
                           <Calendar className="w-3 h-3" />
-                          <span>
-                            {new Date(event.createdAt).toLocaleString()}
-                          </span>
+                          <span>{new Date(event.createdAt).toLocaleString()}</span>
                         </div>
                       </div>
 
@@ -209,27 +198,20 @@ export function ProductHistory({ productId }: ProductHistoryProps) {
                               Fields filled in this registration:
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                              {event.extra.registeredFields.map(
-                                (field: string) => (
-                                  <div key={field} className="flex items-start">
-                                    <div
-                                      className="flex items-center text-foreground font-medium mr-2"
-                                      style={{ minWidth: 120 }}
-                                    >
-                                      {FIELD_ICONS[field] || (
-                                        <Package className="w-3 h-3 mr-1" />
-                                      )}
-                                      {FIELD_LABELS[field] || field}:
-                                    </div>
-                                    <div className="text-muted-foreground break-words">
-                                      {formatFieldValue(
-                                        field,
-                                        event.extra[field],
-                                      )}
-                                    </div>
+                              {event.extra.registeredFields.map((field: string) => (
+                                <div key={field} className="flex items-start">
+                                  <div
+                                    className="flex items-center text-foreground font-medium mr-2"
+                                    style={{ minWidth: 120 }}
+                                  >
+                                    {FIELD_ICONS[field] || <Package className="w-3 h-3 mr-1" />}
+                                    {FIELD_LABELS[field] || field}:
                                   </div>
-                                ),
-                              )}
+                                  <div className="text-muted-foreground break-words">
+                                    {formatFieldValue(field, event.extra[field])}
+                                  </div>
+                                </div>
+                              ))}
                             </div>
                           </div>
                         )}

@@ -129,18 +129,10 @@ export function useAuth() {
     }
   };
 
-  const registerWithEmail = async (
-    email: string,
-    password: string,
-    name: string,
-  ) => {
+  const registerWithEmail = async (email: string, password: string, name: string) => {
     setState((prev) => ({ ...prev, loading: true, error: null }));
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      );
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(userCredential.user, { displayName: name });
       return userCredential.user;
     } catch (error: any) {

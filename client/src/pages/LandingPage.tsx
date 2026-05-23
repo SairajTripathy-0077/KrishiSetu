@@ -69,8 +69,7 @@ const LandingPage = () => {
           Optimize Your Profits
         </h1>
         <p>
-          From Shipment to Your Fields, We Provide Real-Time Supply Chain
-          Visibility for Farmers
+          From Shipment to Your Fields, We Provide Real-Time Supply Chain Visibility for Farmers
         </p>
         <button className="primary-btn get-started" onClick={handleGetStarted}>
           Get Started
@@ -82,24 +81,22 @@ const LandingPage = () => {
           <img src="/tracking-icon.png" alt="Tracking" />
           <h3>Real-Time Tracking</h3>
           <p>
-            Monitor your produce every step of the way with live GPS and supply
-            chain visibility.
+            Monitor your produce every step of the way with live GPS and supply chain visibility.
           </p>
         </div>
         <div className="card">
           <img src="/insights-icon.png" alt="Insights" />
           <h3>Smart Insights</h3>
           <p>
-            Leverage data-driven analytics to reduce losses and optimize
-            farm-to-market efficiency.
+            Leverage data-driven analytics to reduce losses and optimize farm-to-market efficiency.
           </p>
         </div>
         <div className="card">
           <img src="/deliver-icon.png" alt="Delivery" />
           <h3>Seamless Deliveries</h3>
           <p>
-            Ensure fast, efficient, and cost-effective deliveries with optimized
-            logistics solutions.
+            Ensure fast, efficient, and cost-effective deliveries with optimized logistics
+            solutions.
           </p>
         </div>
       </div>

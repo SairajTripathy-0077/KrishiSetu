@@ -21,9 +21,7 @@ export function QRCodeGenerator({ product }: QRCodeGeneratorProps) {
   };
 
   const handleDownload = () => {
-    const canvas = document.getElementById(
-      "product-qr-canvas",
-    ) as HTMLCanvasElement;
+    const canvas = document.getElementById("product-qr-canvas") as HTMLCanvasElement;
     if (canvas) {
       const url = canvas.toDataURL("image/png");
       const link = document.createElement("a");
@@ -75,8 +73,8 @@ export function QRCodeGenerator({ product }: QRCodeGeneratorProps) {
             <span className="font-medium">Batch ID:</span> {product.batchId}
           </div>
           <div data-testid="text-blockchain-hash">
-            <span className="font-medium">Blockchain:</span>{" "}
-            {product.blockchainHash?.slice(0, 12)}...
+            <span className="font-medium">Blockchain:</span> {product.blockchainHash?.slice(0, 12)}
+            ...
           </div>
         </div>
 

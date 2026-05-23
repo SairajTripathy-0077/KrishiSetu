@@ -60,12 +60,7 @@ type FormData = z.infer<typeof formSchema>;
 
 const categories = ["vegetables", "fruits", "grains", "dairy", "meat"];
 
-const certificationOptions = [
-  "Organic",
-  "Non-GMO",
-  "Fair Trade",
-  "Sustainable",
-];
+const certificationOptions = ["Organic", "Non-GMO", "Fair Trade", "Sustainable"];
 
 const units = ["kg", "lbs", "units", "boxes"];
 
@@ -82,19 +77,14 @@ interface LocationSuggestion {
   osm_id?: number;
 }
 
-export function ProductRegistrationForm({
-  isVisible,
-  onClose,
-}: ProductRegistrationFormProps) {
+export function ProductRegistrationForm({ isVisible, onClose }: ProductRegistrationFormProps) {
   const { user } = useAuth();
   const { mutate: createProduct, isPending } = useCreateProduct();
   const { toast } = useToast();
 
   const formRef = useRef<HTMLDivElement>(null);
   const [locationQuery, setLocationQuery] = useState("");
-  const [locationSuggestions, setLocationSuggestions] = useState<
-    LocationSuggestion[]
-  >([]);
+  const [locationSuggestions, setLocationSuggestions] = useState<LocationSuggestion[]>([]);
   const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isEnhancing, setIsEnhancing] = useState(false);
@@ -216,9 +206,7 @@ export function ProductRegistrationForm({
     }
   };
 
-  const handleAnalyzeQuality = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleAnalyzeQuality = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -317,9 +305,7 @@ export function ProductRegistrationForm({
           onError: (error: any) => {
             toast({
               title: "Registration Failed",
-              description:
-                error.message ||
-                "Failed to register product. Please try again.",
+              description: error.message || "Failed to register product. Please try again.",
               variant: "destructive",
             });
           },
@@ -395,16 +381,11 @@ export function ProductRegistrationForm({
 
           <CardContent className="p-6">
             <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6"
-              >
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Basic Product Information */}
                   <div className="space-y-4">
-                    <h4 className="font-medium text-foreground">
-                      Product Information
-                    </h4>
+                    <h4 className="font-medium text-foreground">Product Information</h4>
 
                     <FormField
                       control={form.control}
@@ -431,11 +412,7 @@ export function ProductRegistrationForm({
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Category *</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            value={field.value}
-                            required
-                          >
+                          <Select onValueChange={field.onChange} value={field.value} required>
                             <FormControl>
                               <SelectTrigger data-testid="select-category">
                                 <SelectValue placeholder="Select category" />
@@ -444,8 +421,7 @@ export function ProductRegistrationForm({
                             <SelectContent>
                               {categories.map((category) => (
                                 <SelectItem key={category} value={category}>
-                                  {category.charAt(0).toUpperCase() +
-                                    category.slice(1)}
+                                  {category.charAt(0).toUpperCase() + category.slice(1)}
                                 </SelectItem>
                               ))}
                             </SelectContent>
@@ -478,10 +454,7 @@ export function ProductRegistrationForm({
                                 )}
                                 AI Enhance
                               </Button>
-                              <Select
-                                onValueChange={handleTranslate}
-                                disabled={isTranslating}
-                              >
+                              <Select onValueChange={handleTranslate} disabled={isTranslating}>
                                 <SelectTrigger className="h-7 text-[10px] w-24">
                                   <div className="flex items-center gap-1">
                                     {isTranslating ? (
@@ -494,10 +467,7 @@ export function ProductRegistrationForm({
                                 </SelectTrigger>
                                 <SelectContent>
                                   {indianLanguages.map((lang) => (
-                                    <SelectItem
-                                      key={lang.code}
-                                      value={lang.name}
-                                    >
+                                    <SelectItem key={lang.code} value={lang.name}>
                                       {lang.name}
                                     </SelectItem>
                                   ))}
@@ -547,11 +517,7 @@ export function ProductRegistrationForm({
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Unit *</FormLabel>
-                            <Select
-                              onValueChange={field.onChange}
-                              value={field.value}
-                              required
-                            >
+                            <Select onValueChange={field.onChange} value={field.value} required>
                               <FormControl>
                                 <SelectTrigger data-testid="select-unit">
                                   <SelectValue />
@@ -596,9 +562,7 @@ export function ProductRegistrationForm({
 
                   {/* Origin & Location */}
                   <div className="space-y-4">
-                    <h4 className="font-medium text-foreground">
-                      Origin Information
-                    </h4>
+                    <h4 className="font-medium text-foreground">Origin Information</h4>
 
                     <FormField
                       control={form.control}
@@ -645,11 +609,7 @@ export function ProductRegistrationForm({
                           <div className="absolute z-10 w-full mt-1 bg-popover text-popover-foreground shadow-md rounded-md border max-h-60 overflow-y-auto">
                             {locationSuggestions.map((suggestion, index) => (
                               <div
-                                key={
-                                  suggestion.place_id ||
-                                  suggestion.osm_id ||
-                                  index
-                                }
+                                key={suggestion.place_id || suggestion.osm_id || index}
                                 className="px-4 py-2 cursor-pointer hover:bg-accent"
                                 onClick={() => handleLocationSelect(suggestion)}
                               >
@@ -659,9 +619,7 @@ export function ProductRegistrationForm({
                           </div>
                         )}
                       </div>
-                      <FormMessage>
-                        {form.formState.errors.location?.message}
-                      </FormMessage>
+                      <FormMessage>{form.formState.errors.location?.message}</FormMessage>
                     </FormItem>
 
                     <FormField
@@ -691,9 +649,7 @@ export function ProductRegistrationForm({
                   name="certifications"
                   render={() => (
                     <FormItem>
-                      <FormLabel className="text-base">
-                        Certifications (Optional)
-                      </FormLabel>
+                      <FormLabel className="text-base">Certifications (Optional)</FormLabel>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                         {certificationOptions.map((certification) => (
                           <FormField
@@ -708,19 +664,13 @@ export function ProductRegistrationForm({
                                 >
                                   <FormControl>
                                     <Checkbox
-                                      checked={field.value?.includes(
-                                        certification,
-                                      )}
+                                      checked={field.value?.includes(certification)}
                                       onCheckedChange={(checked) => {
                                         return checked
-                                          ? field.onChange([
-                                              ...field.value,
-                                              certification,
-                                            ])
+                                          ? field.onChange([...field.value, certification])
                                           : field.onChange(
                                               field.value?.filter(
-                                                (value) =>
-                                                  value !== certification,
+                                                (value) => value !== certification,
                                               ),
                                             );
                                       }}
@@ -752,8 +702,7 @@ export function ProductRegistrationForm({
                         AI Quality Inspector (Beta)
                       </h4>
                       <p className="text-xs text-muted-foreground mt-1">
-                        Upload a photo of your produce for instant AI quality
-                        grading
+                        Upload a photo of your produce for instant AI quality grading
                       </p>
                     </div>
                     <div className="relative">
@@ -783,9 +732,7 @@ export function ProductRegistrationForm({
                   {qualityAnalysis && (
                     <div className="mt-3 p-3 bg-background rounded border border-primary/10 animate-in fade-in slide-in-from-top-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-sm font-semibold">
-                          Quality Score:
-                        </span>
+                        <span className="text-sm font-semibold">Quality Score:</span>
                         <span className="text-lg font-bold text-primary">
                           {qualityAnalysis.score}/10
                         </span>

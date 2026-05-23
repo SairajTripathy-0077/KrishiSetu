@@ -89,9 +89,7 @@ export default function RegisteredProductsPage() {
       <>
         <NavigationHeader />
         <div className="max-w-4xl mx-auto py-8">
-          <div className="text-center text-muted-foreground">
-            Loading products...
-          </div>
+          <div className="text-center text-muted-foreground">Loading products...</div>
         </div>
       </>
     );
@@ -106,11 +104,9 @@ export default function RegisteredProductsPage() {
         product.category.toLowerCase().includes(query) ||
         product.farmName.toLowerCase().includes(query);
 
-      const matchesCategory =
-        !selectedCategory || product.category === selectedCategory;
+      const matchesCategory = !selectedCategory || product.category === selectedCategory;
 
-      const matchesStatus =
-        !selectedStatus || product.status.toLowerCase() === selectedStatus;
+      const matchesStatus = !selectedStatus || product.status.toLowerCase() === selectedStatus;
 
       return matchesSearch && matchesCategory && matchesStatus;
     }) || [];
@@ -120,8 +116,7 @@ export default function RegisteredProductsPage() {
       <div className="max-w-4xl mx-auto py-8">
         <h1 className="text-2xl font-bold mb-4">Registered Products</h1>
         <p className="mb-2 px-8  text-muted-foreground">
-          {user?.role === "farmer" &&
-            "Here are all the products you have registered as a farmer."}
+          {user?.role === "farmer" && "Here are all the products you have registered as a farmer."}
           {user?.role === "distributor" &&
             "Here are all the products you have registered as a distributor."}
           {user?.role === "retailer" &&
@@ -141,13 +136,11 @@ export default function RegisteredProductsPage() {
               className="border rounded-lg px-4 py-2 bg-background"
             >
               <option value="">All Categories</option>
-              {[...new Set(products?.map((p) => p.category))].map(
-                (category: string) => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ),
-              )}
+              {Array.from(new Set(products?.map((p) => p.category))).map((category: string) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
             </select>
 
             <select
@@ -171,25 +164,13 @@ export default function RegisteredProductsPage() {
             </Button>
           </div>
         </div>
-        {isLoading && (
-          <div className="text-center text-muted-foreground">
-            Loading products...
-          </div>
-        )}
-        {isError && (
-          <div className="text-center text-red-500">
-            Failed to load products.
-          </div>
-        )}
+        {isLoading && <div className="text-center text-muted-foreground">Loading products...</div>}
+        {isError && <div className="text-center text-red-500">Failed to load products.</div>}
         {!isLoading && !isError && filteredProducts.length === 0 && (
           <div className="bg-muted p-8 rounded-lg text-center">
-            <h3 className="text-lg font-semibold mb-2">
-              No matching results found
-            </h3>
+            <h3 className="text-lg font-semibold mb-2">No matching results found</h3>
 
-            <p className="text-muted-foreground mb-4">
-              Try adjusting your search or filters.
-            </p>
+            <p className="text-muted-foreground mb-4">Try adjusting your search or filters.</p>
 
             <Button
               variant="outline"
@@ -228,21 +209,16 @@ export default function RegisteredProductsPage() {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-lg font-semibold">
-                        {product.name}
-                      </span>
+                      <span className="text-lg font-semibold">{product.name}</span>
                       <Badge>{product.category}</Badge>
                       <Badge variant="outline">{product.status}</Badge>
                     </div>
                     <div className="text-sm text-muted-foreground mb-1">
                       <span className="font-medium">Quantity:</span>{" "}
-                      {editingProductId === product.id &&
-                      canEditFields.includes("quantity") ? (
+                      {editingProductId === product.id && canEditFields.includes("quantity") ? (
                         <input
                           value={editData.quantity}
-                          onChange={(e) =>
-                            handleEditChange("quantity", e.target.value)
-                          }
+                          onChange={(e) => handleEditChange("quantity", e.target.value)}
                           className="border px-2 py-1 rounded w-20"
                         />
                       ) : (
@@ -251,13 +227,10 @@ export default function RegisteredProductsPage() {
                     </div>
                     <div className="text-sm text-muted-foreground mb-1">
                       <span className="font-medium">Farm:</span>{" "}
-                      {editingProductId === product.id &&
-                      canEditFields.includes("farmName") ? (
+                      {editingProductId === product.id && canEditFields.includes("farmName") ? (
                         <input
                           value={editData.farmName}
-                          onChange={(e) =>
-                            handleEditChange("farmName", e.target.value)
-                          }
+                          onChange={(e) => handleEditChange("farmName", e.target.value)}
                           className="border px-2 py-1 rounded w-32"
                         />
                       ) : (
@@ -266,13 +239,10 @@ export default function RegisteredProductsPage() {
                     </div>
                     <div className="text-sm text-muted-foreground mb-1">
                       <span className="font-medium">Location:</span>{" "}
-                      {editingProductId === product.id &&
-                      canEditFields.includes("location") ? (
+                      {editingProductId === product.id && canEditFields.includes("location") ? (
                         <input
                           value={editData.location}
-                          onChange={(e) =>
-                            handleEditChange("location", e.target.value)
-                          }
+                          onChange={(e) => handleEditChange("location", e.target.value)}
                           className="border px-2 py-1 rounded w-32"
                         />
                       ) : (
@@ -281,14 +251,11 @@ export default function RegisteredProductsPage() {
                     </div>
                     <div className="text-sm text-muted-foreground mb-1">
                       <span className="font-medium">Harvest Date:</span>{" "}
-                      {editingProductId === product.id &&
-                      canEditFields.includes("harvestDate") ? (
+                      {editingProductId === product.id && canEditFields.includes("harvestDate") ? (
                         <input
                           type="date"
                           value={editData.harvestDate?.slice(0, 10)}
-                          onChange={(e) =>
-                            handleEditChange("harvestDate", e.target.value)
-                          }
+                          onChange={(e) => handleEditChange("harvestDate", e.target.value)}
                           className="border px-2 py-1 rounded w-32"
                         />
                       ) : product.harvestDate ? (
@@ -299,8 +266,7 @@ export default function RegisteredProductsPage() {
                     </div>
                     {product.batchId && (
                       <div className="text-xs text-muted-foreground">
-                        <span className="font-medium">Batch ID:</span>{" "}
-                        {product.batchId}
+                        <span className="font-medium">Batch ID:</span> {product.batchId}
                       </div>
                     )}
                     {product.blockchainHash && (
@@ -316,8 +282,7 @@ export default function RegisteredProductsPage() {
                       <ul className="ml-4 list-disc text-xs">
                         {owners.map((owner) => (
                           <li key={owner.id}>
-                            {owner.username} ({owner.role})
-                            {owner.ownerId === user?.id && " (You)"}
+                            {owner.username} ({owner.role}){owner.ownerId === user?.id && " (You)"}
                           </li>
                         ))}
                       </ul>
@@ -325,14 +290,8 @@ export default function RegisteredProductsPage() {
 
                     {/* Action Buttons */}
                     <div className="flex gap-2 mt-4">
-                      <Link
-                        href={`/product/${product.id}?from=registered-products`}
-                      >
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="primary-btn"
-                        >
+                      <Link href={`/product/${product.id}?from=registered-products`}>
+                        <Button size="sm" variant="outline" className="primary-btn">
                           View Details
                         </Button>
                       </Link>

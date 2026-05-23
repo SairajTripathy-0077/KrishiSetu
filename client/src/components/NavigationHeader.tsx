@@ -1,13 +1,4 @@
-import {
-  Bell,
-  ChevronDown,
-  LogOut,
-  Menu,
-  Moon,
-  Sprout,
-  Sun,
-  User,
-} from "lucide-react";
+import { Bell, ChevronDown, LogOut, Menu, Moon, Sprout, Sun, User } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
@@ -43,8 +34,9 @@ export function NavigationHeader() {
   const [showOwnershipPanel, setShowOwnershipPanel] = useState(false); // <-- new state
 
   // pending product id so we can redirect after form submit
-  const [pendingProductIdForRedirect, setPendingProductIdForRedirect] =
-    useState<string | null>(null);
+  const [pendingProductIdForRedirect, setPendingProductIdForRedirect] = useState<string | null>(
+    null,
+  );
 
   // store the transfer id & product id for the currently-open form
   const [currentTransferForForm, setCurrentTransferForForm] = useState<{
@@ -109,8 +101,7 @@ export function NavigationHeader() {
     }
 
     // compute scrollbar width so content doesn't jump
-    const scrollbarWidth =
-      window.innerWidth - document.documentElement.clientWidth;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     if (scrollbarWidth > 0) {
       document.body.style.paddingRight = `${scrollbarWidth}px`;
     }
@@ -351,9 +342,7 @@ export function NavigationHeader() {
     }
   };
   const markNotificationReadLocal = (notifId: string) => {
-    setNotifications((prev) =>
-      prev.map((n) => (n.id === notifId ? { ...n, read: true } : n)),
-    );
+    setNotifications((prev) => prev.map((n) => (n.id === notifId ? { ...n, read: true } : n)));
     setNotificationCount((prev) => Math.max(0, prev - 1));
   };
   // Default click behaviour for non-ownership notifications:
@@ -394,10 +383,7 @@ export function NavigationHeader() {
   };
 
   // When form modal closes. result?: { submitted?: boolean, productId?: string }
-  const handleFormClose = (result?: {
-    submitted?: boolean;
-    productId?: string;
-  }) => {
+  const handleFormClose = (result?: { submitted?: boolean; productId?: string }) => {
     setShowDistributorForm(false);
     setShowRetailerForm(false);
 
@@ -462,16 +448,9 @@ export function NavigationHeader() {
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 data-testid="button-theme-toggle"
               >
-                {theme === "dark" ? (
-                  <Sun className="h-5 w-5" />
-                ) : (
-                  <Moon className="h-5 w-5" />
-                )}
+                {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
               </Button>
-              <DropdownMenu
-                open={notifDropdownOpen}
-                onOpenChange={setNotifDropdownOpen}
-              >
+              <DropdownMenu open={notifDropdownOpen} onOpenChange={setNotifDropdownOpen}>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
@@ -491,10 +470,7 @@ export function NavigationHeader() {
                   </Button>
                 </DropdownMenuTrigger>
 
-                <DropdownMenuContent
-                  align="end"
-                  className="w-80 max-h-96 overflow-auto"
-                >
+                <DropdownMenuContent align="end" className="w-80 max-h-96 overflow-auto">
                   <div className="p-2 font-semibold">Notifications</div>
                   <DropdownMenuSeparator />
                   {sortedNotifications.length === 0 ? (
@@ -524,9 +500,7 @@ export function NavigationHeader() {
                           >
                             <div className="flex justify-between items-start gap-2">
                               <div className="flex-1 min-w-0">
-                                <div className="font-medium truncate">
-                                  {notif.title}
-                                </div>
+                                <div className="font-medium truncate">{notif.title}</div>
                                 <div className="text-xs text-muted-foreground truncate">
                                   {notif.message}
                                 </div>
@@ -552,9 +526,7 @@ export function NavigationHeader() {
                                     Reject
                                   </Button>
                                 </div>
-                                <span className="text-xs text-accent">
-                                  Pending
-                                </span>
+                                <span className="text-xs text-accent">Pending</span>
                               </div>
                             </div>
                           </div>
@@ -564,9 +536,7 @@ export function NavigationHeader() {
                       return (
                         <DropdownMenuItem
                           key={notif.id}
-                          onClick={() =>
-                            !isRead && handleNotificationClick(notif)
-                          }
+                          onClick={() => !isRead && handleNotificationClick(notif)}
                           style={{ cursor: isRead ? "default" : "pointer" }}
                           className={notifClass}
                         >
@@ -592,13 +562,8 @@ export function NavigationHeader() {
                     data-testid="button-user-menu"
                   >
                     <Avatar className="w-8 h-8">
-                      <AvatarImage
-                        src={firebaseUser.photoURL || undefined}
-                        alt={user.name}
-                      />
-                      <AvatarFallback>
-                        {user.name.charAt(0).toUpperCase()}
-                      </AvatarFallback>
+                      <AvatarImage src={firebaseUser.photoURL || undefined} alt={user.name} />
+                      <AvatarFallback>{user.name.charAt(0).toUpperCase()}</AvatarFallback>
                     </Avatar>
                     <div className="hidden md:block text-left max-w-[120px] truncate">
                       <div
@@ -621,10 +586,7 @@ export function NavigationHeader() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
                   <Link href="/profile">
-                    <DropdownMenuItem
-                      className="cursor-pointer"
-                      data-testid="menu-profile"
-                    >
+                    <DropdownMenuItem className="cursor-pointer" data-testid="menu-profile">
                       <User className="mr-2 h-4 w-4" />
                       Profile
                     </DropdownMenuItem>
