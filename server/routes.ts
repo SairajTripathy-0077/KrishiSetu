@@ -379,7 +379,16 @@ export async function registerRoutes(app: Express) {
   );
 
   app.get("/api/products/:id", async (req: Request, res: Response) => {
-    const product = await storage.getProduct(req.params.id);
+    const identifier = req.params.id;
+    
+    // Try to find by product ID first
+    let product = await storage.getProduct(identifier);
+    
+    // If not found, try to find by batch ID (for QR code backward compatibility)
+    if (!product) {
+      product = await storage.getProductByBatchId(identifier);
+    }
+    
     if (!product) return res.status(404).json({ message: "Product not found" });
     return res.json(product);
   });
